@@ -1,11 +1,15 @@
 const http = require("node:http");
 const fs = require("node:fs/promises");
 const path = require("node:path");
+require("dotenv").config();
+const { neon } = require("@neondatabase/serverless");
 
 const root = __dirname;
 const dataDir = path.join(root, "data");
 const csvPath = path.join(dataDir, "interest.csv");
 const port = Number(process.env.PORT || 4173);
+const databaseUrl = process.env.DATABASE_URL;
+const sql = databaseUrl ? neon(databaseUrl) : null;
 
 const contentTypes = {
   ".html": "text/html; charset=utf-8",
@@ -30,6 +34,23 @@ function csvEscape(value) {
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+async function ensureRegistrationsTable() {
+  if (!sql) {
+    return;
+  }
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS registrations (
+      id BIGSERIAL PRIMARY KEY,
+      submitted_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      distance TEXT NOT NULL,
+      source TEXT NOT NULL DEFAULT 'website'
+    )
+  `;
 }
 
 async function readJson(request) {
@@ -59,26 +80,41 @@ async function saveInterest(request, response) {
       return;
     }
 
-    await fs.mkdir(dataDir, { recursive: true });
-
-    try {
-      await fs.access(csvPath);
-    } catch {
-      await fs.writeFile(csvPath, "submitted_at,name,email,distance\n", "utf8");
+    if (sql) {
+      await ensureRegistrationsTable();
+      await sql`
+        INSERT INTO registrations (name, email, distance)
+        VALUES (${name}, ${email}, ${distance})
+      `;
+      sendJson(response, 201, { ok: true, storage: "neon" });
+      return;
     }
 
-    const row = [
-      new Date().toISOString(),
-      name,
-      email,
-      distance,
-    ].map(csvEscape).join(",");
-
-    await fs.appendFile(csvPath, `${row}\n`, "utf8");
-    sendJson(response, 201, { ok: true });
-  } catch {
-    sendJson(response, 400, { error: "Could not read this form submission." });
+    await saveInterestToCsv(name, email, distance);
+    sendJson(response, 201, { ok: true, storage: "csv" });
+  } catch (error) {
+    console.error(error);
+    sendJson(response, 400, { error: "Could not save this form submission." });
   }
+}
+
+async function saveInterestToCsv(name, email, distance) {
+  await fs.mkdir(dataDir, { recursive: true });
+
+  try {
+    await fs.access(csvPath);
+  } catch {
+    await fs.writeFile(csvPath, "submitted_at,name,email,distance\n", "utf8");
+  }
+
+  const row = [
+    new Date().toISOString(),
+    name,
+    email,
+    distance,
+  ].map(csvEscape).join(",");
+
+  await fs.appendFile(csvPath, `${row}\n`, "utf8");
 }
 
 async function serveStatic(request, response) {
@@ -123,5 +159,9 @@ const server = http.createServer((request, response) => {
 
 server.listen(port, () => {
   console.log(`Elgin Triathlon site running at http://localhost:${port}`);
-  console.log(`Interest submissions save to ${csvPath}`);
+  console.log(
+    sql
+      ? "Interest submissions save to Neon Postgres."
+      : `DATABASE_URL not set. Interest submissions save to ${csvPath}`
+  );
 });

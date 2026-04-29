@@ -1,0 +1,26 @@
+{
+  "name": "triathalon",
+  "version": "1.0.0",
+  "description": "A static landing page for a simple $20 community triathlon in Elgin, Illinois.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Manthis99/elgin-triathlon-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Manthis99/elgin-triathlon-website/issues"
+  },
+  "homepage": "https://github.com/Manthis99/elgin-triathlon-website#readme",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "dotenv": "^17.4.2"
+  }
+}

@@ -11,12 +11,38 @@ A static landing page for a simple $20 community triathlon in Elgin, Illinois.
 ## Run Locally
 
 ```bash
-node server.js
+npm install
+npm start
 ```
 
 Then open `http://localhost:4173`.
 
-Form submissions are saved locally to `data/interest.csv`, which is ignored by git so collected emails are not pushed.
+## Registration Storage
+
+The form posts to `/api/interest`.
+
+By default, submissions are saved locally to `data/interest.csv`, which is ignored by git so collected emails are not pushed.
+
+To save submissions in Neon Postgres:
+
+1. Create a Neon project.
+2. Copy the pooled connection string from Neon.
+3. Create `.env` from `.env.example`.
+4. Set `DATABASE_URL` in `.env`.
+5. Restart the server with `npm start`.
+
+The server creates this table automatically on first submission:
+
+```sql
+CREATE TABLE IF NOT EXISTS registrations (
+  id BIGSERIAL PRIMARY KEY,
+  submitted_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  distance TEXT NOT NULL,
+  source TEXT NOT NULL DEFAULT 'website'
+);
+```
 
 ## Replace Later
 
