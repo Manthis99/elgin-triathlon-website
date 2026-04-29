@@ -1,0 +1,287 @@
+/* Final polish layer: professional revision loaded after the legacy stylesheet. */
+body {
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-stretch: normal;
+}
+
+h1,
+h2,
+.banner span,
+.banner strong,
+.gallery-word {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+h3,
+.brand,
+.nav,
+.button,
+.race-label,
+.partner-grid span,
+.countdown {
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body::before {
+  display: none;
+}
+
+.hero {
+  height: clamp(420px, 38vw, 560px);
+  min-height: 0;
+  max-height: none;
+  background: #15191a;
+}
+
+.hero::before {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.34'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  content: "";
+  mix-blend-mode: soft-light;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.hero::after {
+  background:
+    linear-gradient(90deg, rgba(16, 21, 22, 0.52), transparent 36%, rgba(16, 21, 22, 0.2)),
+    linear-gradient(180deg, rgba(16, 21, 22, 0.16), rgba(16, 21, 22, 0.42));
+}
+
+.hero-collage {
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  opacity: 1;
+}
+
+.race-badge::before,
+.date-tile::before,
+.banner::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  mix-blend-mode: soft-light;
+  opacity: 0.2;
+}
+
+.hero-copy {
+  bottom: 34px;
+  left: clamp(28px, 5vw, 72px);
+  width: min(410px, calc(100vw - 56px));
+}
+
+.hero-copy h1 {
+  margin-bottom: 8px;
+  font-size: clamp(1.45rem, 2.15vw, 2.35rem);
+}
+
+.hero-copy > p:not(.eyebrow) {
+  margin-bottom: 16px;
+  font-size: clamp(0.86rem, 1vw, 1rem);
+  line-height: 1.35;
+}
+
+.countdown {
+  right: clamp(28px, 5vw, 72px);
+  bottom: 34px;
+  left: auto;
+  grid-template-columns: repeat(3, 82px);
+  color: var(--white);
+}
+
+.countdown span {
+  min-height: 76px;
+  padding: 12px;
+  background: rgba(16, 21, 22, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(8px);
+}
+
+.countdown strong {
+  font-size: 1.9rem;
+}
+
+.course-section {
+  padding-top: clamp(78px, 8vw, 126px);
+  padding-bottom: clamp(92px, 9vw, 140px);
+}
+
+.course-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 1160px;
+  gap: 24px;
+}
+
+.course-card {
+  min-height: 560px;
+}
+
+.course-card img {
+  aspect-ratio: 1 / 0.78;
+}
+
+.course-card div {
+  min-height: 230px;
+  padding: 30px;
+}
+
+.course-card span {
+  margin-bottom: 14px;
+  font-size: 0.76rem;
+}
+
+.course-card h3 {
+  max-width: 360px;
+  margin-bottom: 16px;
+  font-size: clamp(1.32rem, 2vw, 1.82rem);
+  line-height: 1.04;
+}
+
+.course-card p {
+  max-width: 360px;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+#register {
+  padding-top: clamp(72px, 8vw, 112px);
+  padding-bottom: 44px;
+}
+
+#register > div,
+#register > form {
+  width: min(1180px, calc(100vw - 64px));
+}
+
+.register-section h2 {
+  font-size: clamp(2rem, 3.6vw, 4rem);
+}
+
+.register-section p {
+  max-width: 760px;
+  font-size: clamp(1rem, 1.4vw, 1.28rem);
+  line-height: 1.45;
+}
+
+.interest-form {
+  grid-template-columns: minmax(180px, 1fr) minmax(220px, 1fr) minmax(210px, 1fr) auto;
+  gap: 14px;
+  align-items: start;
+  margin-top: 34px;
+}
+
+input,
+select {
+  min-height: 58px;
+  padding: 16px 18px;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid rgba(16, 21, 22, 0.16);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+input::placeholder {
+  color: #7d878b;
+  opacity: 1;
+}
+
+select:invalid {
+  color: #7d878b;
+}
+
+.interest-form .button {
+  min-height: 58px;
+  padding-right: 30px;
+  padding-left: 30px;
+  font-size: 0.86rem;
+}
+
+.form-note {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+.partners {
+  padding-top: 30px;
+  padding-bottom: clamp(82px, 9vw, 128px);
+}
+
+.partners h2 {
+  margin-bottom: 36px;
+  font-size: 1rem;
+}
+
+.partner-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 22px 44px;
+  max-width: 1040px;
+}
+
+.partner-grid span {
+  display: inline-flex;
+  min-height: 0;
+  padding: 0;
+  color: rgba(16, 21, 22, 0.58);
+  border: 0;
+  font-size: clamp(0.9rem, 1.3vw, 1.2rem);
+  text-transform: uppercase;
+}
+
+.partner-grid .partner-primary {
+  color: var(--ink);
+  font-size: clamp(1.08rem, 1.7vw, 1.55rem);
+}
+
+@media (max-width: 920px) {
+  .hero {
+    height: auto;
+    min-height: 690px;
+  }
+
+  .hero-collage {
+    height: 460px;
+  }
+
+  .hero-copy {
+    top: 490px;
+    bottom: auto;
+    color: var(--ink);
+  }
+
+  .hero-copy h1,
+  .hero-copy > p:not(.eyebrow) {
+    color: var(--ink);
+  }
+
+  .countdown {
+    top: 594px;
+    right: 28px;
+    bottom: auto;
+    left: 28px;
+    grid-template-columns: repeat(3, 1fr);
+    color: var(--ink);
+  }
+
+  .countdown span {
+    background: rgba(255, 255, 255, 0.72);
+    border-color: rgba(16, 21, 22, 0.12);
+  }
+
+  .course-grid,
+  .race-grid,
+  .interest-form {
+    grid-template-columns: 1fr;
+  }
+
+  .course-card {
+    min-height: 0;
+  }
+}

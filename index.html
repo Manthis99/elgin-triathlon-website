@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="A simple, community-first triathlon in Elgin, Illinois with $20 Sprint and Olympic-distance race options."
+    >
+    <title>Elgin Triathlon | $20 Community Race</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="polish.css">
+  </head>
+  <body>
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="Elgin Triathlon home">
+        <span class="brand-mark">ET</span>
+        <span>
+          <strong>Elgin</strong>
+          <em>Triathlon</em>
+        </span>
+      </a>
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="nav" data-nav>
+        <a href="#course">Course</a>
+        <a href="#races">Races</a>
+        <a href="#included">Included</a>
+        <a href="#faq">FAQ</a>
+        <a class="nav-cta" href="#register">Register Interest</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-collage" aria-label="Triathlon visual collage">
+          <figure class="tile swim-tile">
+            <img
+              src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=1200&q=80"
+              alt="Cyclist riding fast on a road"
+            >
+          </figure>
+          <div class="tile race-badge">
+            <span>$20</span>
+            <strong>Community Tri</strong>
+          </div>
+          <figure class="tile bike-tile">
+            <img
+              src="images/Elgin City drone v2_1.6.1.jpg"
+              alt="Aerial view of downtown Elgin and the Fox River"
+            >
+          </figure>
+          <div class="tile date-tile">
+            <span>350m Sprint Swim</span>
+            <strong>Two Distances</strong>
+          </div>
+          <figure class="tile run-tile">
+            <img
+              src="images/Elgin City Drone-3.jpg"
+              alt="Aerial view of Elgin riverfront park space"
+            >
+          </figure>
+          <figure class="tile river-tile">
+            <img
+              src="images/Elgin City Drone-61.jpg"
+              alt="Local runner carrying event gear in Elgin"
+            >
+          </figure>
+        </div>
+        <div class="hero-copy">
+          <h1 id="hero-title">2026 Elgin Triathlon</h1>
+          <p>August 2, 2026 · Sprint, super sprint, and Olympic distance</p>
+          <a class="button primary" href="#register">Register Interest</a>
+        </div>
+        <div class="countdown" aria-label="Countdown to race day" data-countdown>
+          <span>
+            <strong data-countdown-days>00</strong>
+            Days
+          </span>
+          <span>
+            <strong data-countdown-hours>00</strong>
+            Hours
+          </span>
+          <span>
+            <strong data-countdown-minutes>00</strong>
+            Min
+          </span>
+        </div>
+      </section>
+
+      <section class="quick-facts" aria-label="Event highlights">
+        <article>
+          <span>Entry</span>
+          <strong>$20</strong>
+        </article>
+        <article>
+          <span>Format</span>
+          <strong>Sprint + Olympic</strong>
+        </article>
+        <article>
+          <span>Location</span>
+          <strong>Elgin, IL</strong>
+        </article>
+        <article>
+          <span>Vibe</span>
+          <strong>Beginner Friendly</strong>
+        </article>
+      </section>
+
+      <section class="section course-section" id="course" aria-labelledby="course-title">
+        <div class="course-grid">
+          <article class="course-card tall-card">
+            <img
+              src="https://images.unsplash.com/photo-1600965962361-9035dbfd1c50?auto=format&fit=crop&w=900&q=80"
+              alt="Swimmer moving through open water"
+            >
+            <div>
+              <span>Swim</span>
+              <h3>Tentatively swim the Fox River</h3>
+              <p>
+                We are exploring a Fox River swim and will only lock it in once
+                safety, permits, and water conditions make sense.
+              </p>
+            </div>
+          </article>
+          <article class="course-card">
+            <img
+              src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=900&q=80"
+              alt="Road cyclist training outdoors"
+            >
+            <div>
+              <span>Bike</span>
+              <h3>Bike the Elgin Bike Trail</h3>
+              <p>A clear trail-forward bike route with simple turns, volunteer support, and low drama.</p>
+            </div>
+          </article>
+          <article class="course-card">
+            <img
+              src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=900&q=80"
+              alt="Runner racing outside"
+            >
+            <div>
+              <span>Run</span>
+              <h3>Run the Elgin Bike Trail</h3>
+              <p>A straightforward out-and-back style run with water, encouragement, and a local finish.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section race-section" id="races" aria-labelledby="races-title">
+        <div class="section-heading compact">
+          <h2 id="races-title">Race Options</h2>
+        </div>
+        <div class="race-grid">
+          <article class="race-card featured">
+            <p class="race-label">First-timer friendly</p>
+            <h3>Super Sprint</h3>
+            <dl>
+              <div>
+                <dt>Swim</dt>
+                <dd>0.23 mi</dd>
+              </div>
+              <div>
+                <dt>Bike</dt>
+                <dd>6.2 mi</dd>
+              </div>
+              <div>
+                <dt>Run</dt>
+                <dd>1.5 mi</dd>
+              </div>
+            </dl>
+            <p>The easiest way in: short, approachable, and still absolutely a triathlon.</p>
+            <a class="button primary" href="#register">Register</a>
+          </article>
+
+          <article class="race-card">
+            <p class="race-label">Classic short course</p>
+            <h3>Sprint</h3>
+            <dl>
+              <div>
+                <dt>Swim</dt>
+                <dd>350m</dd>
+              </div>
+              <div>
+                <dt>Bike</dt>
+                <dd>TBD</dd>
+              </div>
+              <div>
+                <dt>Run</dt>
+                <dd>TBD</dd>
+              </div>
+            </dl>
+            <p>A local sprint distance for new racers, returning athletes, and friendly rivalries.</p>
+            <a class="button primary" href="#register">Register</a>
+          </article>
+
+          <article class="race-card">
+            <p class="race-label">Longer challenge</p>
+            <h3>Olympic</h3>
+            <dl>
+              <div>
+                <dt>Swim</dt>
+                <dd>1.5k</dd>
+              </div>
+              <div>
+                <dt>Bike</dt>
+                <dd>40k</dd>
+              </div>
+              <div>
+                <dt>Run</dt>
+                <dd>10k</dd>
+              </div>
+            </dl>
+            <p>A classic Olympic-distance target, pending final route approvals and safety review.</p>
+            <a class="button primary" href="#register">Register</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="banner" aria-label="Event promise">
+        <div>
+          <span>Elgin Triathlon</span>
+          <strong>Simple. Local. Twenty bucks.</strong>
+        </div>
+      </section>
+
+      <section class="section split-section" id="included" aria-labelledby="included-title">
+        <figure>
+          <img
+            src="images/Elgin City Drone-27.jpg"
+            alt="People playing on a wet outdoor court in Elgin"
+          >
+        </figure>
+        <div>
+          <p class="eyebrow">Your Ability, Your Race</p>
+          <h2 id="included-title">Built to build community.</h2>
+          <p>
+            A low-cost race for neighbors, families, first-timers, and anyone
+            who wants Elgin to feel a little more connected by the finish line.
+          </p>
+          <ul class="check-list">
+            <li>Basic timing plan</li>
+            <li>Course markings</li>
+            <li>Volunteer support</li>
+            <li>Water at key points</li>
+            <li>Finish-line gathering</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section gallery-section" aria-label="Placeholder event imagery">
+        <div class="gallery-word">ELGIN</div>
+        <div class="image-strip">
+          <img
+            src="images/Elgin City Drone-3.jpg"
+            alt="Overhead view of an Elgin riverfront park"
+          >
+          <img
+            src="images/Elgin City drone v2_1.10.1.jpg"
+            alt="Aerial view of Elgin streets and river"
+          >
+          <img
+            src="images/Elgin City Drone-136.jpg"
+            alt="Local volunteer at an Elgin community activity"
+          >
+        </div>
+      </section>
+
+      <section class="section register-section" id="register" aria-labelledby="register-title">
+        <div>
+          <h2 id="register-title">Register Now</h2>
+          <p>
+            Pick your distance and we will keep you on the interest list while
+            permits, routes, and the final registration flow come together.
+          </p>
+        </div>
+        <form class="interest-form" data-interest-form>
+          <label>
+            Name
+            <input name="name" type="text" autocomplete="name" placeholder="Your name" required>
+          </label>
+          <label>
+            Email
+            <input name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          </label>
+          <label>
+            Distance
+            <select name="distance" required>
+              <option value="">Choose your distance</option>
+              <option>Super Sprint</option>
+              <option>Sprint</option>
+              <option>Olympic Distance</option>
+              <option>Volunteer</option>
+            </select>
+          </label>
+          <button class="button primary" type="submit">Register</button>
+          <p class="form-note" data-form-note aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="partners" aria-labelledby="partners-title">
+        <h2 id="partners-title">Community Partners</h2>
+        <div class="partner-grid" aria-label="Placeholder community partner logos">
+          <span class="partner-primary">One Collective</span>
+          <span class="partner-primary">Rally Point</span>
+          <span class="partner-primary">Christ Community Church</span>
+          <span class="partner-primary">Hope Culture Church</span>
+          <span>Your Mom</span>
+          <span>Your Best Friend</span>
+          <span>Your Kids</span>
+          <span>Your Husband</span>
+          <span>That One Neighbor</span>
+          <span>Everyone With Snacks</span>
+        </div>
+      </section>
+
+      <section class="section faq-section" id="faq" aria-labelledby="faq-title">
+        <div class="section-heading compact">
+          <p class="eyebrow">FAQ</p>
+          <h2 id="faq-title">The practical stuff.</h2>
+        </div>
+        <div class="faq-grid">
+          <details open>
+            <summary>Do I need a triathlon bike?</summary>
+            <p>No. A safe working bike and helmet are the important pieces.</p>
+          </details>
+          <details>
+            <summary>Is this beginner friendly?</summary>
+            <p>Yes. The Sprint distance is being shaped specifically for first-time triathletes.</p>
+          </details>
+          <details>
+            <summary>Where is the swim?</summary>
+            <p>The venue is still TBD. The page will update once permits and safety plans are confirmed.</p>
+          </details>
+          <details>
+            <summary>Why only $20?</summary>
+            <p>The goal is a simple community race, not a premium race weekend. We will only promise what the budget can support.</p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <a class="brand inverse" href="#top" aria-label="Elgin Triathlon home">
+        <span class="brand-mark">ET</span>
+        <span>
+          <strong>Elgin</strong>
+          <em>Triathlon</em>
+        </span>
+      </a>
+      <div class="footer-links">
+        <a href="#course">Course</a>
+        <a href="#races">Races</a>
+        <a href="#register">Register</a>
+        <a href="#included">Community</a>
+      </div>
+      <p>
+        $20 community triathlon concept for Elgin, Illinois. Routes, permits,
+        water safety, and final race details are still in progress.
+        © 2026 Elgin Triathlon.
+      </p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
