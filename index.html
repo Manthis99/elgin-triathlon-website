@@ -148,8 +148,8 @@
           </article>
           <article class="course-card">
             <img
-              src="images/human%20photos/france-2025-46.jpg"
-              alt="Cyclist outdoors"
+              src="images/stock/munbaik-cycling-clothing-tfuzApwXaSQ-unsplash.jpg"
+              alt="Cyclist on a road ride"
             >
             <div>
               <span>Bike</span>
@@ -159,8 +159,8 @@
           </article>
           <article class="course-card">
             <img
-              src="images/human%20photos/IMG_6171.JPG"
-              alt="Runner outside"
+              src="images/stock/jorgen-hendriksen-BomU_atAAKQ-unsplash.jpg"
+              alt="Runner on a trail"
             >
             <div>
               <span>Run</span>
@@ -302,7 +302,11 @@
             permits, routes, and the final registration flow come together.
           </p>
         </div>
-        <form class="interest-form" data-interest-form>
+        <form class="interest-form" data-interest-form action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="cd79a640-6805-45a3-9209-88028df71e9a">
+          <input type="hidden" name="subject" value="New Elgin Triathlon Interest Signup">
+          <input type="hidden" name="from_name" value="Elgin Triathlon Website">
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
           <label>
             Name
             <input name="name" type="text" autocomplete="name" placeholder="Your name" required>

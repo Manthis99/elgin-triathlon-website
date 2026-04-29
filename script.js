@@ -39,26 +39,30 @@ if (form && formNote) {
     formNote.textContent = "Saving...";
     submitButton.disabled = true;
 
+    const successMessage = `Got it, ${payload.name}. You're on the ${payload.distance} interest list.`;
+
     try {
-      const response = await fetch("/api/interest", {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Accept: "application/json",
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(Object.fromEntries(data.entries())),
       });
 
-      const result = await response.json();
+      const result = await response.json().catch(() => ({}));
 
-      if (!response.ok) {
-        throw new Error(result.error || "Could not save your interest.");
+      if (response.ok && result.success) {
+        formNote.textContent = successMessage;
+        form.reset();
+        return;
       }
 
-      formNote.textContent = `Got it, ${payload.name}. You're on the ${payload.distance} interest list.`;
-      form.reset();
+      formNote.textContent = result.message || "Something went wrong on our end. Try again in a moment.";
     } catch (error) {
-      formNote.textContent =
-        error instanceof Error ? error.message : "Could not save your interest.";
+      console.error("Interest submission failed", error);
+      formNote.textContent = "Couldn't reach the server. Check your connection and try again.";
     } finally {
       submitButton.disabled = false;
     }
