@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <title>You're in! · Elgin Triathlon</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Inter:wght@400..800&family=Caveat:wght@500..700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --paper: #f6efe2;
+        --paper-light: #fffdf7;
+        --ink: #1a1612;
+        --coral: #ee5b48;
+        --coral-dark: #c9402f;
+        --muted: #5f686c;
+        --line: #e6ddc9;
+        --serif: "Fraunces", Georgia, serif;
+        --hand: "Caveat", cursive;
+        --sans: "Inter", system-ui, sans-serif;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        min-height: 100vh;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--sans);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 20px;
+        overflow-x: hidden;
+      }
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.16;
+        mix-blend-mode: multiply;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+      }
+      #confetti {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 5;
+      }
+      .stage {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        max-width: 460px;
+        text-align: center;
+      }
+      .kicker {
+        font-family: var(--hand);
+        color: var(--coral-dark);
+        font-size: 1.6rem;
+        opacity: 0;
+        animation: rise 500ms ease 120ms forwards;
+      }
+      h1 {
+        font-family: var(--serif);
+        font-weight: 600;
+        font-size: clamp(2.2rem, 8vw, 3rem);
+        line-height: 1.02;
+        margin: 4px 0 24px;
+        opacity: 0;
+        animation: rise 600ms ease 220ms forwards;
+      }
+      h1 em { font-style: italic; color: var(--coral); }
+
+      .ticket {
+        position: relative;
+        background: var(--paper-light);
+        border-radius: 20px;
+        box-shadow: 0 30px 60px rgba(26, 22, 18, 0.18);
+        padding: 30px 26px 26px;
+        text-align: left;
+        opacity: 0;
+        transform: translateY(30px) rotate(-2deg);
+        animation: drop 700ms cubic-bezier(0.22, 1, 0.36, 1) 360ms forwards;
+      }
+      /* Perforated top edge */
+      .ticket::before {
+        content: "";
+        position: absolute;
+        top: -1px; left: 18px; right: 18px;
+        height: 8px;
+        background-image: radial-gradient(circle at center, var(--paper) 46%, transparent 47%);
+        background-size: 18px 16px;
+        background-position: center top;
+      }
+      .ticket-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 16px;
+        border-bottom: 2px dashed var(--line);
+      }
+      .ticket-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .ticket-mark {
+        width: 38px; height: 38px;
+        border-radius: 50%;
+        background: var(--coral);
+        color: #fff;
+        font-family: var(--serif);
+        font-style: italic;
+        font-weight: 700;
+        display: grid;
+        place-content: center;
+        font-size: 0.9rem;
+      }
+      .ticket-brand strong { display: block; font-size: 0.9rem; letter-spacing: 0.5px; }
+      .ticket-brand span { display: block; font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
+
+      .stamp {
+        font-family: var(--serif);
+        font-weight: 700;
+        font-size: 0.82rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--coral-dark);
+        border: 2px solid var(--coral-dark);
+        border-radius: 8px;
+        padding: 6px 10px;
+        transform: rotate(6deg) scale(0);
+        opacity: 0;
+        animation: stampIn 380ms cubic-bezier(0.34, 1.56, 0.64, 1) 900ms forwards;
+      }
+
+      .ticket-body { padding-top: 18px; }
+      .field-label {
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 1.6px;
+        color: var(--muted);
+        font-weight: 700;
+      }
+      .code {
+        font-family: "Courier New", monospace;
+        font-size: clamp(1.8rem, 8vw, 2.4rem);
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: var(--coral-dark);
+        margin: 2px 0 18px;
+        word-break: break-all;
+      }
+      .meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px 12px;
+        margin-bottom: 18px;
+      }
+      .meta .field-value { font-weight: 700; font-size: 1rem; margin-top: 2px; }
+      .details {
+        background: var(--paper);
+        border-radius: 12px;
+        padding: 14px 16px;
+        font-size: 0.85rem;
+        line-height: 1.55;
+        color: var(--ink);
+      }
+      .details strong { display: block; margin-bottom: 4px; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); }
+
+      .note {
+        margin-top: 18px;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.5;
+        opacity: 0;
+        animation: rise 600ms ease 1100ms forwards;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 22px;
+        opacity: 0;
+        animation: rise 600ms ease 1200ms forwards;
+      }
+      .btn {
+        font-family: var(--sans);
+        font-weight: 700;
+        font-size: 0.85rem;
+        padding: 12px 20px;
+        border-radius: 999px;
+        border: 0;
+        cursor: pointer;
+        text-decoration: none;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+      }
+      .btn.primary { background: var(--coral); color: #fff; box-shadow: 3px 3px 0 var(--ink); }
+      .btn.primary:hover { background: var(--coral-dark); }
+      .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+
+      @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+      @keyframes drop { to { opacity: 1; transform: translateY(0) rotate(-1deg); } }
+      @keyframes stampIn { to { opacity: 1; transform: rotate(-8deg) scale(1); } }
+
+      @media (prefers-reduced-motion: reduce) {
+        .kicker, h1, .ticket, .stamp, .note, .actions { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+      }
+      @media print {
+        body::after, #confetti, .actions, .kicker { display: none; }
+        .ticket { box-shadow: none; border: 1px solid var(--line); }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="confetti"></canvas>
+    <main class="stage">
+      <p class="kicker">payment confirmed</p>
+      <h1 data-headline>You're <em>in!</em></h1>
+
+      <section class="ticket" aria-label="Your race ticket">
+        <div class="ticket-head">
+          <div class="ticket-brand">
+            <span class="ticket-mark">ET</span>
+            <div>
+              <strong>Elgin Triathlon</strong>
+              <span>Aug 29, 2026 · Elgin, IL</span>
+            </div>
+          </div>
+          <span class="stamp">Paid</span>
+        </div>
+
+        <div class="ticket-body">
+          <p class="field-label">Confirmation code</p>
+          <p class="code" data-code>·········</p>
+
+          <div class="meta" data-meta hidden>
+            <div data-name-block hidden>
+              <p class="field-label">Racer</p>
+              <p class="field-value" data-name></p>
+            </div>
+            <div data-distance-block hidden>
+              <p class="field-label">Distance</p>
+              <p class="field-value" data-distance></p>
+            </div>
+          </div>
+
+          <div class="details">
+            <strong>Race day</strong>
+            Check-in 6:30 AM in front of the Elgin Center — bring your bike.
+            Swim starts 7:00 AM at the Elgin Lap Pool.
+          </div>
+        </div>
+      </section>
+
+      <p class="note" data-note>
+        A confirmation with your ticket is on its way to your inbox.
+      </p>
+
+      <div class="actions">
+        <a class="btn primary" href="index.html">Back to the event</a>
+        <button class="btn ghost" type="button" onclick="window.print()">Save / print ticket</button>
+      </div>
+    </main>
+
+    <script>
+      // ---- Pull the Stripe session id from the redirect URL ----
+      const params = new URLSearchParams(location.search);
+      const sessionId = params.get("session_id") || params.get("session") || "";
+
+      const els = {
+        code: document.querySelector("[data-code]"),
+        name: document.querySelector("[data-name]"),
+        distance: document.querySelector("[data-distance]"),
+        meta: document.querySelector("[data-meta]"),
+        nameBlock: document.querySelector("[data-name-block]"),
+        distanceBlock: document.querySelector("[data-distance-block]"),
+        note: document.querySelector("[data-note]"),
+        headline: document.querySelector("[data-headline]"),
+      };
+
+      function shortRef(id) {
+        return id ? id.replace(/^cs_(test_|live_)?/, "").slice(-8).toUpperCase() : "";
+      }
+
+      // Optimistic fallback so the ticket never looks empty, even with no backend.
+      els.code.textContent = sessionId ? shortRef(sessionId) : "SEE EMAIL";
+
+      // ---- Try to personalise from the backend (graceful if absent) ----
+      async function hydrate() {
+        if (!sessionId) return;
+        try {
+          const res = await fetch(`/api/session?id=${encodeURIComponent(sessionId)}`);
+          if (!res.ok) return;
+          const data = await res.json();
+          if (!data || data.paid === false) return;
+          if (data.ticketCode) els.code.textContent = data.ticketCode;
+          if (data.name) {
+            els.name.textContent = data.name;
+            els.nameBlock.hidden = false;
+            els.meta.hidden = false;
+            const first = data.name.trim().split(/\s+/)[0];
+            els.headline.innerHTML = `You're <em>in</em>, ${first}!`;
+          }
+          if (data.distance) {
+            els.distance.textContent = data.distance;
+            els.distanceBlock.hidden = false;
+            els.meta.hidden = false;
+          }
+          if (data.email) {
+            els.note.innerHTML = `Your ticket + receipt are on the way to <strong>${data.email}</strong>.`;
+          }
+        } catch (err) {
+          // Static hosting with no /api — the emailed ticket still covers them.
+        }
+      }
+      hydrate();
+
+      // ---- Lightweight canvas confetti (no dependencies) ----
+      (function confetti() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const canvas = document.getElementById("confetti");
+        const ctx = canvas.getContext("2d");
+        let w, h, pieces = [];
+        const colors = ["#ee5b48", "#c9402f", "#f4b942", "#5b8c5a", "#1a1612", "#fffdf7"];
+
+        function resize() {
+          w = canvas.width = window.innerWidth;
+          h = canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        for (let i = 0; i < 140; i += 1) {
+          pieces.push({
+            x: Math.random() * w,
+            y: Math.random() * -h,
+            r: 4 + Math.random() * 6,
+            c: colors[(Math.random() * colors.length) | 0],
+            rot: Math.random() * Math.PI,
+            vr: (Math.random() - 0.5) * 0.2,
+            vy: 2 + Math.random() * 3.5,
+            vx: (Math.random() - 0.5) * 1.6,
+            sway: Math.random() * Math.PI,
+          });
+        }
+
+        const start = Date.now();
+        function frame() {
+          ctx.clearRect(0, 0, w, h);
+          pieces.forEach((p) => {
+            p.sway += 0.02;
+            p.x += p.vx + Math.sin(p.sway) * 0.6;
+            p.y += p.vy;
+            p.rot += p.vr;
+            if (p.y > h + 20) { p.y = -20; p.x = Math.random() * w; }
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rot);
+            ctx.fillStyle = p.c;
+            ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 0.6);
+            ctx.restore();
+          });
+          // Fade out after ~6s to keep it tasteful.
+          const elapsed = Date.now() - start;
+          if (elapsed > 6000) {
+            canvas.style.transition = "opacity 1.2s ease";
+            canvas.style.opacity = "0";
+            if (elapsed > 7500) return;
+          }
+          requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      })();
+    </script>
+  </body>
+</html>

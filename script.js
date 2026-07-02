@@ -3,12 +3,30 @@ const nav = document.querySelector("[data-nav]");
 const form = document.querySelector("[data-interest-form]");
 const formNote = document.querySelector("[data-form-note]");
 const countdown = document.querySelector("[data-countdown]");
+const buyLink = document.querySelector("[data-buy-link]");
+const buyDistance = document.querySelector("[data-buy-distance]");
+
+// Carry the chosen distance to Stripe checkout via client_reference_id, which
+// flows through to the completed session and the fulfillment webhook.
+if (buyLink) {
+  const base = buyLink.dataset.paymentLink || buyLink.getAttribute("href");
+  const updateBuyLink = () => {
+    const distance = buyDistance ? buyDistance.value : "";
+    const separator = base.includes("?") ? "&" : "?";
+    buyLink.href = distance
+      ? `${base}${separator}client_reference_id=${encodeURIComponent(distance)}`
+      : base;
+  };
+  updateBuyLink();
+  if (buyDistance) buyDistance.addEventListener("change", updateBuyLink);
+}
 
 if (navToggle && nav) {
   navToggle.addEventListener("click", () => {
     const isOpen = nav.classList.toggle("is-open");
     navToggle.setAttribute("aria-expanded", String(isOpen));
     navToggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+    document.body.classList.toggle("nav-open", isOpen);
   });
 
   nav.addEventListener("click", (event) => {
@@ -16,6 +34,7 @@ if (navToggle && nav) {
       nav.classList.remove("is-open");
       navToggle.setAttribute("aria-expanded", "false");
       navToggle.setAttribute("aria-label", "Open navigation");
+      document.body.classList.remove("nav-open");
     }
   });
 }
@@ -70,7 +89,7 @@ if (form && formNote) {
 }
 
 if (countdown) {
-  const raceDay = new Date("2026-08-02T07:00:00-05:00").getTime();
+  const raceDay = new Date("2026-08-29T07:00:00-05:00").getTime();
   const daysEl = countdown.querySelector("[data-countdown-days]");
   const hoursEl = countdown.querySelector("[data-countdown-hours]");
   const minutesEl = countdown.querySelector("[data-countdown-minutes]");
