@@ -118,12 +118,16 @@
         font-family: var(--serif);
         font-style: italic;
         font-weight: 700;
-        display: grid;
-        place-content: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
         font-size: 0.9rem;
+        letter-spacing: 1px;
+        text-indent: 1px;
       }
       .ticket-brand strong { display: block; font-size: 0.9rem; letter-spacing: 0.5px; }
-      .ticket-brand span { display: block; font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
+      .ticket-brand div span { display: block; font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
 
       .stamp {
         font-family: var(--serif);
@@ -148,15 +152,26 @@
         color: var(--muted);
         font-weight: 700;
       }
+      .holder { margin-bottom: 18px; }
+      .holder-name {
+        font-family: var(--serif);
+        font-weight: 700;
+        font-size: 1.5rem;
+        line-height: 1.1;
+        margin-top: 3px;
+        color: var(--ink);
+      }
+      .code-block { margin-bottom: 18px; }
       .code {
         font-family: "Courier New", monospace;
         font-size: clamp(1.8rem, 8vw, 2.4rem);
         font-weight: 700;
         letter-spacing: 3px;
         color: var(--coral-dark);
-        margin: 2px 0 18px;
+        margin: 3px 0 0;
         word-break: break-all;
       }
+      .field-value { font-weight: 700; font-size: 1rem; margin-top: 3px; }
       .meta {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -216,8 +231,30 @@
         .kicker, h1, .ticket, .stamp, .note, .actions { animation-duration: 1ms !important; animation-delay: 0ms !important; }
       }
       @media print {
-        body::after, #confetti, .actions, .kicker { display: none; }
-        .ticket { box-shadow: none; border: 1px solid var(--line); }
+        /* Force backgrounds/colors to render (browsers strip them by default). */
+        * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        body {
+          display: block;
+          background: #fff;
+          padding: 24px 0 0;
+        }
+        body::after, #confetti, .actions { display: none !important; }
+        .stage { max-width: 460px; margin: 0 auto; }
+        /* Neutralize entrance animations so everything is fully visible. */
+        .kicker, h1, .ticket, .stamp, .note {
+          opacity: 1 !important;
+          transform: none !important;
+          animation: none !important;
+        }
+        h1 { margin-top: 0; }
+        .ticket {
+          box-shadow: none;
+          border: 1.5px solid var(--line);
+          page-break-inside: avoid;
+        }
       }
     </style>
   </head>
@@ -240,18 +277,19 @@
         </div>
 
         <div class="ticket-body">
-          <p class="field-label">Confirmation code</p>
-          <p class="code" data-code>·········</p>
+          <div class="holder" data-name-block hidden>
+            <p class="field-label">Ticket holder</p>
+            <p class="holder-name" data-name></p>
+          </div>
 
-          <div class="meta" data-meta hidden>
-            <div data-name-block hidden>
-              <p class="field-label">Racer</p>
-              <p class="field-value" data-name></p>
-            </div>
-            <div data-distance-block hidden>
-              <p class="field-label">Distance</p>
-              <p class="field-value" data-distance></p>
-            </div>
+          <div class="code-block">
+            <p class="field-label">Confirmation code</p>
+            <p class="code" data-code>·········</p>
+          </div>
+
+          <div class="holder" data-distance-block hidden>
+            <p class="field-label">Distance</p>
+            <p class="field-value" data-distance></p>
           </div>
 
           <div class="details">
@@ -281,7 +319,6 @@
         code: document.querySelector("[data-code]"),
         name: document.querySelector("[data-name]"),
         distance: document.querySelector("[data-distance]"),
-        meta: document.querySelector("[data-meta]"),
         nameBlock: document.querySelector("[data-name-block]"),
         distanceBlock: document.querySelector("[data-distance-block]"),
         note: document.querySelector("[data-note]"),
@@ -307,14 +344,12 @@
           if (data.name) {
             els.name.textContent = data.name;
             els.nameBlock.hidden = false;
-            els.meta.hidden = false;
             const first = data.name.trim().split(/\s+/)[0];
             els.headline.innerHTML = `You're <em>in</em>, ${first}!`;
           }
           if (data.distance) {
             els.distance.textContent = data.distance;
             els.distanceBlock.hidden = false;
-            els.meta.hidden = false;
           }
           if (data.email) {
             els.note.innerHTML = `Your ticket + receipt are on the way to <strong>${data.email}</strong>.`;
