@@ -5,7 +5,14 @@
 const Stripe = require("stripe");
 const { getTicketBySession, extractDistance } = require("../lib/tickets");
 
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY || "");
+// Lazy so a missing key doesn't crash the function at load.
+let stripeClient = null;
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) throw new Error("STRIPE_SECRET_KEY is not set");
+  if (!stripeClient) stripeClient = Stripe(key);
+  return stripeClient;
+}
 
 module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -22,6 +29,16 @@ module.exports = async function handler(req, res) {
 
   if (!id) {
     res.status(400).json({ error: "Missing session id" });
+    return;
+  }
+
+  let stripe;
+  try {
+    stripe = getStripe();
+  } catch (err) {
+    // Not configured yet — let the success page use its graceful fallback.
+    console.error("Session lookup config error:", err.message);
+    res.status(200).json({ paid: false, configured: false });
     return;
   }
 

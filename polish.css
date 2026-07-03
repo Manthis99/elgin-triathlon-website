@@ -752,6 +752,8 @@ summary { font-family: var(--serif) !important; font-style: italic !important; f
   align-items: center !important;
   gap: clamp(28px, 5vw, 72px) !important;
   min-height: 0 !important;
+  max-width: 1400px !important;
+  margin-inline: auto !important;
   padding: clamp(48px, 7vw, 96px) clamp(20px, 5vw, 64px) clamp(56px, 8vw, 96px) !important;
 }
 
@@ -843,8 +845,8 @@ summary { font-family: var(--serif) !important; font-style: italic !important; f
   height: auto !important;
   max-height: none !important;
   width: 100% !important;
-  max-width: 540px !important;
-  margin-left: auto !important;
+  max-width: 600px !important;
+  margin: 0 auto !important;
 }
 
 /* Hide badges in the collage now that headline carries the message */
