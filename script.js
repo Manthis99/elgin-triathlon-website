@@ -22,6 +22,13 @@ if (buyLink) {
 }
 
 if (navToggle && nav) {
+  const closeNav = () => {
+    nav.classList.remove("is-open");
+    navToggle.setAttribute("aria-expanded", "false");
+    navToggle.setAttribute("aria-label", "Open navigation");
+    document.body.classList.remove("nav-open");
+  };
+
   navToggle.addEventListener("click", () => {
     const isOpen = nav.classList.toggle("is-open");
     navToggle.setAttribute("aria-expanded", String(isOpen));
@@ -29,13 +36,16 @@ if (navToggle && nav) {
     document.body.classList.toggle("nav-open", isOpen);
   });
 
+  // Close when a link is tapped (closest handles nested markup) or the X.
   nav.addEventListener("click", (event) => {
-    if (event.target instanceof HTMLAnchorElement) {
-      nav.classList.remove("is-open");
-      navToggle.setAttribute("aria-expanded", "false");
-      navToggle.setAttribute("aria-label", "Open navigation");
-      document.body.classList.remove("nav-open");
+    if (event.target.closest("a") || event.target.closest("[data-nav-close]")) {
+      closeNav();
     }
+  });
+
+  // Escape key also closes the menu.
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && nav.classList.contains("is-open")) closeNav();
   });
 }
 

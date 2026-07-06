@@ -309,10 +309,12 @@ body {
   position: relative;
 }
 
-/* Subtle paper grain across the whole page */
+/* Subtle paper grain across the whole page. Absolute (tied to full document
+   height) rather than fixed, so iOS Safari's collapsing toolbar can't leave a
+   bare strip at the bottom where the texture stops short. */
 body::after {
   content: "";
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
@@ -689,10 +691,15 @@ input, select {
 .partner-grid span:nth-child(5) { transform: rotate(2deg); }
 .partner-grid span:nth-child(6) { font-family: var(--hand) !important; font-size: 1.6rem !important; transform: rotate(-1.5deg); color: var(--coral-dark) !important; }
 
-/* Header — solid warm paper instead of translucent over hero */
+/* Header — fully opaque + pinned to the very top so page content never
+   shows through or peeks above it as it scrolls under. */
 .site-header {
   position: sticky !important;
-  background: rgba(246, 239, 226, 0.92) !important;
+  top: 0 !important;
+  z-index: 40 !important;
+  background: var(--paper-warm) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border-bottom: 1px solid rgba(26,22,18,0.08) !important;
 }
 .site-header .brand,
@@ -1600,4 +1607,41 @@ html, body { max-width: 100vw; overflow-x: hidden; }
   background: #2c2620 !important;
   transform: none !important;
   box-shadow: none !important;
+}
+
+/* ============================================================
+   iOS overscroll matches the page, and a clear mobile menu
+   close (X) button inside the full-screen nav overlay.
+   ============================================================ */
+html {
+  background: var(--paper-warm);
+}
+
+.nav-close {
+  display: none;
+}
+
+@media (max-width: 920px) {
+  .nav-close {
+    display: flex !important;
+    position: absolute !important;
+    top: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: var(--ink-warm);
+    color: #fffdf7;
+    border: 0;
+    border-radius: 50%;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 1002;
+  }
+  .nav-close:hover {
+    background: var(--red);
+  }
 }
