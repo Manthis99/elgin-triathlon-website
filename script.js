@@ -6,16 +6,19 @@ const countdown = document.querySelector("[data-countdown]");
 const buyLink = document.querySelector("[data-buy-link]");
 const buyDistance = document.querySelector("[data-buy-distance]");
 
-// Carry the chosen distance to Stripe checkout via client_reference_id, which
-// flows through to the completed session and the fulfillment webhook.
+// Route to a per-distance Stripe Payment Link (Sprint is capacity-limited,
+// Bike + Run is unlimited), and carry the distance via client_reference_id so
+// it flows through to the completed session and the fulfillment webhook.
 if (buyLink) {
-  const base = buyLink.dataset.paymentLink || buyLink.getAttribute("href");
+  const links = {
+    sprint: buyLink.dataset.linkSprint,
+    "bike-run": buyLink.dataset.linkBikerun,
+  };
   const updateBuyLink = () => {
-    const distance = buyDistance ? buyDistance.value : "";
+    const distance = (buyDistance && buyDistance.value) || "sprint";
+    const base = links[distance] || links.sprint;
     const separator = base.includes("?") ? "&" : "?";
-    buyLink.href = distance
-      ? `${base}${separator}client_reference_id=${encodeURIComponent(distance)}`
-      : base;
+    buyLink.href = `${base}${separator}client_reference_id=${encodeURIComponent(distance)}`;
   };
   updateBuyLink();
   if (buyDistance) buyDistance.addEventListener("change", updateBuyLink);
