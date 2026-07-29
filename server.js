@@ -68,7 +68,7 @@ async function saveInterest(request, response) {
   try {
     if (registrationClosed) {
       sendJson(response, 403, {
-        error: "Registration is full. We are no longer accepting new submissions.",
+        error: "Sprint registration and the interest form are closed. Bike + Run registration remains open through the ticket link.",
       });
       return;
     }
