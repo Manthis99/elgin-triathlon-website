@@ -10,6 +10,7 @@ const csvPath = path.join(dataDir, "interest.csv");
 const port = Number(process.env.PORT || 4173);
 const databaseUrl = process.env.DATABASE_URL;
 const sql = databaseUrl ? neon(databaseUrl) : null;
+const registrationClosed = true;
 
 const contentTypes = {
   ".html": "text/html; charset=utf-8",
@@ -65,6 +66,13 @@ async function readJson(request) {
 
 async function saveInterest(request, response) {
   try {
+    if (registrationClosed) {
+      sendJson(response, 403, {
+        error: "Registration is full. We are no longer accepting new submissions.",
+      });
+      return;
+    }
+
     const body = await readJson(request);
     const name = String(body.name || "").trim();
     const email = String(body.email || "").trim().toLowerCase();

@@ -1609,6 +1609,49 @@ html, body { max-width: 100vw; overflow-x: hidden; }
   box-shadow: none !important;
 }
 
+/* Registration closed state. */
+.button.is-disabled,
+.nav-cta.is-closed {
+  background: var(--ink-warm, #1a1612) !important;
+  color: #fffdf7 !important;
+  cursor: default !important;
+  box-shadow: none !important;
+}
+
+.button.is-disabled:hover,
+.nav-cta.is-closed:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.registration-closed-panel {
+  border-color: rgba(239, 76, 79, 0.34) !important;
+}
+
+.closed-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 24px auto 22px !important;
+  padding: 10px 18px !important;
+  color: #fffdf7 !important;
+  background: var(--red, #ef4c4f) !important;
+  border-radius: 999px !important;
+  font-size: 0.82rem !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+}
+
+.closed-copy {
+  max-width: 620px !important;
+  margin: 0 auto !important;
+  color: var(--muted) !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  line-height: 1.7 !important;
+  text-align: center !important;
+}
+
 /* ============================================================
    iOS overscroll matches the page, and a clear mobile menu
    close (X) button inside the full-screen nav overlay.

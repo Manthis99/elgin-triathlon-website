@@ -55,7 +55,7 @@
         <a href="#races">Races</a>
         <a href="#included">Included</a>
         <a href="#faq">FAQ</a>
-        <a class="nav-cta" href="#register">I'm in</a>
+        <a class="nav-cta is-closed" href="#register">Registration full</a>
       </nav>
     </header>
 
@@ -65,13 +65,13 @@
           <p class="hero-kicker">Aug 29, 2026 · Elgin, IL</p>
           <h1 id="hero-title">A <em>$20</em> community triathlon.</h1>
           <p class="hero-sub">A Sprint-distance race — or skip the swim with a Bike + Run option. Built for first-timers, neighbors, and anyone who wants Elgin to feel a little more connected.</p>
-          <a class="button primary" href="#register">I'm in →</a>
+          <a class="button primary is-disabled" href="#register" aria-disabled="true">Registration full</a>
           <div class="countdown" aria-label="Countdown to race day" data-countdown>
             <span><strong data-countdown-days>00</strong>Days</span>
             <span><strong data-countdown-hours>00</strong>Hours</span>
             <span><strong data-countdown-minutes>00</strong>Min</span>
           </div>
-          <p class="hero-meta">Check-in 6:30 AM in front of the Elgin Center — bring your bike. Swim starts 7:00 AM. Ticket sales close Monday, July 13.</p>
+          <p class="hero-meta">Check-in 6:30 AM in front of the Elgin Center — bring your bike. Swim starts 7:00 AM. Registration is now full.</p>
         </div>
         <div class="hero-collage" aria-label="Triathlon visual collage">
           <figure class="tile swim-tile polaroid">
@@ -196,7 +196,7 @@
               </div>
             </dl>
             <p>A local sprint distance for new racers, returning athletes, and friendly rivalries.</p>
-            <a class="button primary" href="#register">Register</a>
+            <a class="button primary is-disabled" href="#register" aria-disabled="true">Full</a>
           </article>
 
           <article class="race-card">
@@ -217,7 +217,7 @@
               </div>
             </dl>
             <p>All the community vibes, none of the pool laps. Same bike and run course as the Sprint — just start on dry land.</p>
-            <a class="button primary" href="#register">Register</a>
+            <a class="button primary is-disabled" href="#register" aria-disabled="true">Full</a>
           </article>
         </div>
       </section>
@@ -276,63 +276,29 @@
       </section>
 
       <section class="section register-section" id="register" aria-labelledby="register-title">
-        <div class="buy-panel">
+        <div class="buy-panel registration-closed-panel">
           <p class="eyebrow">Race entry</p>
-          <h2 id="register-title">Get your ticket</h2>
+          <h2 id="register-title">Registration is full</h2>
           <p class="buy-intro">
-            Secure your spot for August 29. Pick your distance, check out, and
-            you'll get an instant ticket on screen plus a confirmation emailed to you.
+            The first Elgin Triathlon has reached capacity. Thank you for
+            helping a simple local race fill up faster than expected.
           </p>
-          <p class="buy-price"><strong>$20</strong><span>per racer</span></p>
+          <p class="closed-badge">Sold out</p>
           <ul class="buy-includes">
-            <li>Timed race + full course support</li>
-            <li>Finish-line gathering</li>
-            <li>Ticket &amp; receipt emailed instantly</li>
+            <li>Race spots are no longer available</li>
+            <li>Registered racers will receive final details by email</li>
+            <li>Volunteers and spectators are still welcome</li>
           </ul>
-          <label class="buy-distance">
-            Your distance
-            <select data-buy-distance>
-              <option value="sprint">Sprint</option>
-              <option value="bike-run">Bike + Run (no swim)</option>
-            </select>
-          </label>
-          <a
-            class="button primary buy-btn"
-            data-buy-link
-            data-link-sprint="https://buy.stripe.com/4gM5kCbbi2kr9PAfzJ7kc00"
-            data-link-bikerun="https://buy.stripe.com/00w7sK2EM7EL2n8afp7kc01"
-            href="https://buy.stripe.com/4gM5kCbbi2kr9PAfzJ7kc00"
-          >Get your ticket → $20</a>
-          <p class="buy-fine"><span class="deadline-note">Sales close Monday, July 13</span></p>
+          <p class="buy-fine"><span class="deadline-note">Registration closed because the race is full</span></p>
         </div>
 
         <div class="interest-panel">
-          <p class="interest-lead">Not racing yet — just want updates?</p>
-          <form class="interest-form" data-interest-form action="https://api.web3forms.com/submit" method="POST">
-            <input type="hidden" name="access_key" value="cd79a640-6805-45a3-9209-88028df71e9a">
-            <input type="hidden" name="subject" value="New Elgin Triathlon Interest Signup">
-            <input type="hidden" name="from_name" value="Elgin Triathlon Website">
-            <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
-            <label>
-              Name
-              <input name="name" type="text" autocomplete="name" placeholder="Sarah Mitchell" required>
-            </label>
-            <label>
-              Email
-              <input name="email" type="email" autocomplete="email" placeholder="sarah.m@gmail.com" required>
-            </label>
-            <label>
-              Distance
-              <select name="distance" required>
-                <option value="">Choose your distance</option>
-                <option>Sprint</option>
-                <option>Bike + Run (no swim)</option>
-                <option>Volunteer</option>
-              </select>
-            </label>
-            <button class="button primary" type="submit">Join the list</button>
-            <p class="form-note" data-form-note aria-live="polite"></p>
-          </form>
+          <p class="interest-lead">Already registered?</p>
+          <p class="closed-copy">
+            Keep an eye on your inbox for course notes, arrival instructions,
+            and race-day reminders. We are keeping the field small so the first
+            year stays simple, safe, and fun.
+          </p>
         </div>
       </section>
 
@@ -393,7 +359,7 @@
       <div class="footer-links">
         <a href="#course">Course</a>
         <a href="#races">Races</a>
-        <a href="#register">Register</a>
+        <a href="#register">Registration full</a>
         <a href="#included">Community</a>
       </div>
       <p>
