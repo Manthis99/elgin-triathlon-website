@@ -68,7 +68,7 @@ async function saveInterest(request, response) {
   try {
     if (registrationClosed) {
       sendJson(response, 403, {
-        error: "Sprint registration and the interest form are closed. Bike + Run registration remains open through the ticket link.",
+        error: "Registration is closed. The 2026 Elgin Triathlon is sold out.",
       });
       return;
     }
