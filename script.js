@@ -123,3 +123,73 @@ if (countdown) {
   updateCountdown();
   window.setInterval(updateCountdown, 60000);
 }
+
+/* ============================================================
+   Post-event: "Do it again?" vote counter.
+   Uses abacus.jasoncameron.dev — a free, no-auth public counter.
+   localStorage guards against repeat clicks on the same browser.
+   ============================================================ */
+(function initVote() {
+  const panel = document.querySelector("[data-vote-panel]");
+  if (!panel) return;
+  const button = panel.querySelector("[data-vote-button]");
+  const label = panel.querySelector("[data-vote-label]");
+  const countEl = panel.querySelector("[data-vote-count]");
+  const NS = "elgin-triathlon";
+  const KEY = "do-it-again-2027";
+  const STORAGE = "et-voted-2027";
+  const BASE = "https://abacus.jasoncameron.dev";
+
+  const fmt = (n) => `${n} ${n === 1 ? "vote" : "votes"} so far`;
+
+  const setVoted = () => {
+    button.disabled = true;
+    button.classList.add("voted");
+    label.textContent = "Thanks — vote counted ✓";
+  };
+
+  const alreadyVoted = () => {
+    try { return localStorage.getItem(STORAGE) === "1"; } catch { return false; }
+  };
+  const markVoted = () => {
+    try { localStorage.setItem(STORAGE, "1"); } catch {}
+  };
+
+  const readCount = async () => {
+    try {
+      const r = await fetch(`${BASE}/get/${NS}/${KEY}`);
+      if (r.status === 404) { countEl.textContent = fmt(0); return; }
+      if (!r.ok) throw new Error("bad status");
+      const data = await r.json();
+      countEl.textContent = fmt(data.value ?? 0);
+    } catch {
+      countEl.textContent = "";
+    }
+  };
+
+  const submitVote = async () => {
+    button.disabled = true;
+    label.textContent = "Counting…";
+    try {
+      const r = await fetch(`${BASE}/hit/${NS}/${KEY}`);
+      if (!r.ok) throw new Error("bad status");
+      const data = await r.json();
+      markVoted();
+      setVoted();
+      countEl.textContent = fmt(data.value ?? 0);
+    } catch {
+      button.disabled = false;
+      label.textContent = "Try again";
+      countEl.textContent = "Couldn't reach the counter — refresh and retry.";
+    }
+  };
+
+  if (alreadyVoted()) {
+    setVoted();
+  }
+  button.addEventListener("click", () => {
+    if (alreadyVoted()) return;
+    submitVote();
+  });
+  readCount();
+})();
